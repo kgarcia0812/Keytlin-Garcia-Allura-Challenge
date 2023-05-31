@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="estilo.css">
+
+  <meta charset="UTF-8">
+  <title>Encriptador - Keytlin Garcia</title>
+</head>
+<body>
+  <h1>Encriptador - Creado por Keytlin Garcia</h1>
+  <form>
+    <label>
+      Texto a encriptar o desencriptar:
+      <textarea id="input-text"></textarea>
+    </label>
+    <br>
+    <label>
+      <input type="radio" name="action" value="encrypt" checked>
+      Encriptar
+    </label>
+    <label>
+      <input type="radio" name="action" value="decrypt">
+      Desencriptar
+    </label>
+    <br>
+    <button type="button" onclick="process()">Procesar</button>
+    <button type="button" onclick="copyToClipboard()">Copiar</button>
+  </form>
+  <div>
+    <label>
+      Resultado:
+      <textarea id="output-text"></textarea>
+    </label>
+  </div>
+  <script>
+    function process() {
+      const inputText = document.getElementById('input-text').value.toLowerCase();
+      const action = document.querySelector('input[name="action"]:checked').value;
+      let outputText = '';
+
+      if (action === 'encrypt') {
+        outputText = encrypt(inputText);
+      } else if (action === 'decrypt') {
+        outputText = decrypt(inputText);
+      }
+
+      document.getElementById('output-text').value = outputText;
+    }
+
+    function encrypt(text) {
+      const replacements = {
+        'e': 'enter',
+        'i': 'imes',
+        'a': 'ai',
+        'o': 'ober',
+        'u': 'ufat'
+      };
+
+      for (const key in replacements) {
+        text = text.replace(new RegExp(key, 'g'), replacements[key]);
+      }
+
+      return text;
+    }
+
+    function decrypt(text) {
+      const replacements = {
+        'enter': 'e',
+        'imes': 'i',
+        'ai': 'a',
+        'ober': 'o',
+        'ufat': 'u'
+      };
+
+      for (const key in replacements) {
+        text = text.replace(new RegExp(key, 'g'), replacements[key]);
+      }
+
+      return text;
+    }
+
+    function copyToClipboard() {
+      const outputText = document.getElementById('output-text');
+      outputText.select();
+      document.execCommand('copy');
+    }
+  </script>
+</body>
+</html>
+
+
